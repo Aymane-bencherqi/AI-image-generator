@@ -1,0 +1,6 @@
+fastapi
+uvicorn
+diffusers[torch]
+transformers
+torch
+pillow 
