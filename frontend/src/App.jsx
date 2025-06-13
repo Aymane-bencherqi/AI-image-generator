@@ -12,14 +12,16 @@ function App() {
     setError(null);
     setImageUrl(null);
     try {
-      const res = await fetch('http://localhost:8000/generate', {
+      const res = await fetch('https://a18b-35-247-182-8.ngrok-free.app/generate', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ prompt }),
       });
       if (!res.ok) throw new Error('Failed to generate image');
       const data = await res.json();
-      setImageUrl('http://localhost:8000' + data.image_url);
+      if (data.image_base64) {
+        setImageUrl('data:image/png;base64,' + data.image_base64);
+      }
     } catch (err) {
       setError(err.message);
     } finally {

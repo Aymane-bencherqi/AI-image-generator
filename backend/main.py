@@ -8,6 +8,8 @@ from diffusers import StableDiffusionPipeline
 from PIL import Image
 import uuid
 import os
+from io import BytesIO
+import base64
 
 app = FastAPI()
 
@@ -39,9 +41,8 @@ async def generate_image(request: PromptRequest):
     # Generate image
     with torch.autocast("cuda" if torch.cuda.is_available() else "cpu"):
         image = pipeline(prompt).images[0]
-    # Save image
-    filename = f"{uuid.uuid4().hex}.png"
-    image_path = os.path.join("generated", filename)
-    image.save(image_path)
-    # Return image URL
-    return {"message": "Image generated successfully", "image_url": f"/generated/{filename}"} 
+    # Convert image to base64
+    buffered = BytesIO()
+    image.save(buffered, format="PNG")
+    img_str = base64.b64encode(buffered.getvalue()).decode("utf-8")
+    return {"message": "Image generated successfully", "image_base64": img_str} 
