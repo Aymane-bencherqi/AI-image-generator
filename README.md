@@ -1,4 +1,4 @@
-# 🦇 Batman POV Image Generator
+# 🤖 AI Image Generator
 
 Un générateur d'images basé sur l'IA qui crée des scènes de point de vue (POV) de Batman en utilisant Stable Diffusion. Ce projet combine un backend FastAPI avec un frontend React pour offrir une expérience utilisateur intuitive de génération d'images.
 
